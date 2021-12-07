@@ -16,14 +16,16 @@ pipeline {
                 sh "mv target/*.war target/myweb.war"
             }
         }
-         stage('Deploy') {
-           sshagent(['tomcat-new']) {
-               sh """
-                  scp -o StrictHostKeyChecking=no target/myweb.war centos@172.31.44.89:/opt/tomcat/webapps/
-                  ssh centos@172.31.44.89 /opt/tomcat/bin/shutdown.sh
-                  ssh centos@172.31.44.89 /opt/tomcat/bin/startup.sh
-               """
-           }
+        stage('Deploy') {
+           steps {
+               sshagent(['tomcat-new']) {
+                   sh """
+                      scp -o StrictHostKeyChecking=no target/myweb.war centos@172.31.44.89:/opt/tomcat/webapps/
+                      ssh centos@172.31.44.89 /opt/tomcat/bin/shutdown.sh
+                      ssh centos@172.31.44.89 /opt/tomcat/bin/startup.sh
+                   """
+               }
+             }
         }
     }
 }
