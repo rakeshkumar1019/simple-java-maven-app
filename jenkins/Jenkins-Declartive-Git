@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+               git credentialsId: 'git_credential', url: 'https://github.com/rakeshkumar1019/simple-java-maven-app.git'
+            }
+        }
+    }
+}
